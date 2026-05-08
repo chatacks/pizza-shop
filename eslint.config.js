@@ -16,7 +16,7 @@ export default defineConfig([
     plugins: {
       react,
       prettierPlugin,
-      simpleImportSort,
+      'simple-import-sort': simpleImportSort,
     },
     settings: {
       react: {
