@@ -43,7 +43,6 @@ export default defineConfig([
       ],
       'react/jsx-max-props-per-line': [2, { maximum: 2 }],
       'react/jsx-closing-bracket-location': [2, 'tag-aligned'],
-      'react/jsx-first-prop-new-line': [2, 'multiline'],
       'react/jsx-indent-props': ['error', 2],
       'react/jsx-indent': ['error', 2],
       'react/react-in-jsx-scope': 'off',

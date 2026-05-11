@@ -1,12 +1,11 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "extends": "@shadcn/ui",
   "style": "radix-nova",
   "rsc": false,
   "tsx": true,
   "tailwind": {
     "config": "",
-    "css": "src/globals.css",
+    "css": "src/global.css",
     "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""
