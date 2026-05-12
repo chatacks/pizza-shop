@@ -1,6 +1,6 @@
 import js from '@eslint/js';
 import prettierConfig from 'eslint-config-prettier';
-import prettierPlugin from 'eslint-plugin-prettier';
+// import prettierPlugin from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
@@ -15,7 +15,7 @@ export default defineConfig([
     files: ['**/*.{ts,tsx}'],
     plugins: {
       react,
-      prettierPlugin,
+      // prettierPlugin,
       'simple-import-sort': simpleImportSort,
     },
     settings: {
@@ -25,12 +25,12 @@ export default defineConfig([
     },
     ignores: ['**/*.config.ts', '**/ui/*.{ts,tsx}'],
     extends: [
-      prettierConfig,
       js.configs.recommended,
       tseslint.configs.recommended,
       react.configs.flat.recommended,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
+      prettierConfig,
     ],
     languageOptions: {
       ecmaVersion: 2020,
@@ -41,23 +41,9 @@ export default defineConfig([
         'error',
         { varsIgnorePattern: '^[A-Z_]' },
       ],
-      'react/jsx-max-props-per-line': [2, { maximum: 2 }],
-      'react/jsx-closing-bracket-location': [2, 'tag-aligned'],
-      'react/jsx-indent-props': ['error', 2],
-      'react/jsx-indent': ['error', 2],
+      'react/jsx-max-props-per-line': ['error', { maximum: 2 }],
+      'react/jsx-closing-bracket-location': ['error', 'tag-aligned'],
       'react/react-in-jsx-scope': 'off',
-      semi: ['error'],
-      indent: [
-        'error',
-        2,
-        {
-          VariableDeclarator: 1,
-        },
-      ],
-      quotes: ['error', 'single', { avoidEscape: true }],
-      'jsx-quotes': ['error', 'prefer-double'],
-      'object-curly-spacing': ['warn', 'always'],
-      'object-curly-newline': ['warn', { consistent: true }],
       'simple-import-sort/imports': 'error',
     },
   },
