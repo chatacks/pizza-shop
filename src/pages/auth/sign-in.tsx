@@ -1,10 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { toast } from 'sonner';
 import * as zod from 'zod';
 
+import { signIn } from '@/api/sign-in';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,6 +18,8 @@ const signInFormSchema = zod.object({
 type SignInFormData = zod.infer<typeof signInFormSchema>;
 
 export function SignIn() {
+  const [searchParams] = useSearchParams();
+
   const {
     register,
     handleSubmit,
@@ -23,16 +27,17 @@ export function SignIn() {
   } = useForm<SignInFormData>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: {
-      email: '',
+      email: searchParams.get('email') ?? '',
     },
   });
 
+  const { mutateAsync: authenticateFn } = useMutation({
+    mutationFn: signIn,
+  });
+
   const handleSignIn = async (data: SignInFormData) => {
-    console.log(data);
     try {
-      await new Promise((resolve) => {
-        setTimeout(resolve, 2000);
-      });
+      await authenticateFn(data);
       toast.success('Enviamos um link de autenticação para seu e-mail.', {
         action: {
           label: 'Reenviar',
