@@ -1,6 +1,6 @@
 import { api } from '@/lib/axios';
 
-interface ResgisterRestaurant {
+interface ResgisterRestaurantBody {
   restaurantName: string;
   managerName: string;
   phone: string;
@@ -12,7 +12,7 @@ export async function registerRestaurant({
   managerName,
   email,
   phone,
-}: ResgisterRestaurant) {
+}: ResgisterRestaurantBody) {
   await api.post('/restaurants', {
     restaurantName,
     managerName,
