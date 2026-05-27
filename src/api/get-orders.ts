@@ -8,6 +8,10 @@ export interface Order {
   total: number;
 }
 
+interface GetOrdersQuery {
+  pageIndex?: number | null;
+}
+
 interface GetOrdersResponse {
   orders: Order[];
   meta: {
@@ -17,10 +21,10 @@ interface GetOrdersResponse {
   };
 }
 
-export async function getOrders() {
+export async function getOrders({ pageIndex }: GetOrdersQuery) {
   const response = await api.get<GetOrdersResponse>('/orders', {
     params: {
-      pageIndex: 0,
+      pageIndex,
     },
   });
 
