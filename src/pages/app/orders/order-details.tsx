@@ -14,7 +14,11 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-export function OrderDetails() {
+interface OrderDetailsProps {
+  orderId: string;
+}
+
+export function OrderDetails({ orderId }: OrderDetailsProps) {
   return (
     <DialogContent className="lg:max-w-[calc(30%-2rem)]">
       <DialogHeader>
