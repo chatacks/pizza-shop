@@ -1,9 +1,11 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale/pt-BR';
 import { ArrowRight, Search, X } from 'lucide-react';
 import { useState } from 'react';
 
-import type { Order } from '@/api/get-orders';
+import { cancelOrder } from '@/api/cancel-order';
+import type { GetOrdersResponse, Order } from '@/api/get-orders';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { TableCell, TableRow } from '@/components/ui/table';
@@ -17,6 +19,39 @@ interface OrderTableRowProps {
 
 export function OrderTableRow({ order }: OrderTableRowProps) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const queryClient = useQueryClient();
+
+  const updateOrderStatusOnCache = (orderId: string, status: OrderStatus) => {
+    const ordersListCached = queryClient.getQueriesData<GetOrdersResponse>({
+      queryKey: ['orders'],
+    });
+
+    ordersListCached.forEach(([cachedKey, cachedData]) => {
+      if (!cachedData) {
+        return;
+      }
+
+      queryClient.setQueryData<GetOrdersResponse>(cachedKey, {
+        ...cachedData,
+        orders: cachedData.orders.map((order) => {
+          if (order.orderId === orderId) {
+            return { ...order, status };
+          }
+
+          return order;
+        }),
+      });
+    });
+  };
+
+  const { mutateAsync: cancelOrderFn } = useMutation({
+    mutationFn: cancelOrder,
+    onSuccess(_data, { orderId }) {
+      updateOrderStatusOnCache(orderId, 'canceled');
+    },
+  });
+
+  const disabledCancelOrder = !['pending', 'processing'].includes(order.status);
 
   return (
     <TableRow>
@@ -73,6 +108,8 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
         <Button
           className="cursor-pointer"
           variant="ghost"
+          disabled={disabledCancelOrder}
+          onClick={() => cancelOrderFn({ orderId: order.orderId })}
         >
           <X className="h-3 w-3" />
           Cancelar
