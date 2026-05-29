@@ -5,6 +5,7 @@ import { LabelList, Pie, PieChart, ResponsiveContainer } from 'recharts';
 
 import { getPopularProducts } from '@/api/get-popular-products';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Spinner } from '@/components/ui/spinner';
 
 import { CustomLabel, CustomPie, renderCustomizedLabel } from './pie-customs';
 
@@ -25,7 +26,7 @@ export function PopularProductsChart() {
         </div>
       </CardHeader>
       <CardContent>
-        {popularProducts && (
+        {popularProducts ? (
           <ResponsiveContainer
             width="100%"
             height={240}
@@ -53,6 +54,10 @@ export function PopularProductsChart() {
               </Pie>
             </PieChart>
           </ResponsiveContainer>
+        ) : (
+          <div className="flex h-60 items-center justify-center">
+            <Spinner className="text-muted-foreground size-10" />
+          </div>
         )}
       </CardContent>
     </Card>

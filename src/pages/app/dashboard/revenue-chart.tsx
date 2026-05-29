@@ -20,6 +20,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { DateRangePicker } from '@/components/ui/date-range-picker';
+import { Spinner } from '@/components/ui/spinner';
 
 export function RevenueChart() {
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
@@ -67,7 +68,7 @@ export function RevenueChart() {
         </div>
       </CardHeader>
       <CardContent>
-        {chartData && (
+        {chartData ? (
           <ResponsiveContainer
             width="100%"
             height={240}
@@ -107,6 +108,10 @@ export function RevenueChart() {
               />
             </LineChart>
           </ResponsiveContainer>
+        ) : (
+          <div className="flex h-60 items-center justify-center">
+            <Spinner className="text-muted-foreground size-10" />
+          </div>
         )}
       </CardContent>
     </Card>
