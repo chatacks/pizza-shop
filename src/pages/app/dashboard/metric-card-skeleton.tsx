@@ -4,7 +4,7 @@ interface MetricCardSkeletonProps {
   className?: string;
 }
 
-function MetricCardSkeleton({ className }: MetricCardSkeletonProps) {
+export function MetricCardSkeleton({ className }: MetricCardSkeletonProps) {
   return (
     <>
       <Skeleton className={`mt-1 h-7 w-36 ${className}`} />
@@ -12,5 +12,3 @@ function MetricCardSkeleton({ className }: MetricCardSkeletonProps) {
     </>
   );
 }
-
-export default MetricCardSkeleton;
