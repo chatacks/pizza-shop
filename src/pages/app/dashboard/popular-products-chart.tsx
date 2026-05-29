@@ -1,20 +1,19 @@
 import { RechartsDevtools } from '@recharts/devtools';
+import { useQuery } from '@tanstack/react-query';
 import { BarChart } from 'lucide-react';
 import { LabelList, Pie, PieChart, ResponsiveContainer } from 'recharts';
 
+import { getPopularProducts } from '@/api/get-popular-products';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import { CustomLabel, CustomPie, renderCustomizedLabel } from './pie-customs';
 
-const mockData = [
-  { product: 'Pizza Frango c/Catupiry Familia', amount: 58 },
-  { product: 'Pizza Calabresa Familia', amount: 30 },
-  { product: 'Pizza Banana Nevada', amount: 26 },
-  { product: 'Pizza Chocolate', amount: 22 },
-  { product: 'Pizza Sabor Doideira', amount: 17 },
-];
-
 export function PopularProductsChart() {
+  const { data: popularProducts } = useQuery({
+    queryKey: ['metrics', 'popular-products'],
+    queryFn: getPopularProducts,
+  });
+
   return (
     <Card className="col-span-3">
       <CardHeader className="pb-8">
@@ -26,33 +25,35 @@ export function PopularProductsChart() {
         </div>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer
-          width="100%"
-          height={240}
-        >
-          <PieChart
-            data={mockData}
-            style={{ fontSize: 12 }}
+        {popularProducts && (
+          <ResponsiveContainer
+            width="100%"
+            height={240}
           >
-            <Pie
-              data={mockData}
-              dataKey="amount"
-              nameKey="product"
-              cx="50%"
-              cy="50%"
-              outerRadius={86}
-              innerRadius={64}
-              strokeWidth={8}
-              labelLine={false}
-              fill="var(--color-emerald-500)"
-              shape={CustomPie}
-              label={(props) => renderCustomizedLabel(mockData, props)}
+            <PieChart
+              data={popularProducts}
+              style={{ fontSize: 12 }}
             >
-              <RechartsDevtools />
-              <LabelList content={CustomLabel} />
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
+              <Pie
+                data={popularProducts}
+                dataKey="amount"
+                nameKey="product"
+                cx="50%"
+                cy="50%"
+                outerRadius={86}
+                innerRadius={64}
+                strokeWidth={8}
+                labelLine={false}
+                fill="var(--color-emerald-500)"
+                shape={CustomPie}
+                label={(props) => renderCustomizedLabel(popularProducts, props)}
+              >
+                <RechartsDevtools />
+                <LabelList content={CustomLabel} />
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        )}
       </CardContent>
     </Card>
   );
