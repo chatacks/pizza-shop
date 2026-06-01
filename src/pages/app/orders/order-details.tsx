@@ -9,7 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Spinner } from '@/components/ui/spinner';
 import {
   Table,
   TableBody,
@@ -20,6 +19,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
+import { OrderDetailsSkeleton } from './order-details-skeleton';
 import { OrderStatus } from './order-status';
 
 interface OrderDetailsProps {
@@ -139,9 +139,7 @@ export function OrderDetails({ orderId, open }: OrderDetailsProps) {
           </Table>
         </div>
       ) : (
-        <div className="flex items-center justify-center space-y-4">
-          <Spinner className="size-12" />
-        </div>
+        <OrderDetailsSkeleton />
       )}
     </DialogContent>
   );
