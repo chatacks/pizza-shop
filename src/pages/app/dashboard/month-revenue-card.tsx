@@ -31,7 +31,7 @@ export function MonthRevenueCard() {
               })}
             </span>
             <p className="text-muted-foreground text-xs">
-              {monthRevenue.diffFromLastMonth <= 0 ? (
+              {monthRevenue.diffFromLastMonth > 0 ? (
                 <>
                   <span className="text-emerald-500 dark:text-emerald-400">
                     +{monthRevenue.diffFromLastMonth}%
@@ -41,7 +41,7 @@ export function MonthRevenueCard() {
               ) : (
                 <>
                   <span className="text-red-500 dark:text-red-400">
-                    -{monthRevenue.diffFromLastMonth}%
+                    {monthRevenue.diffFromLastMonth}%
                   </span>{' '}
                   em relação ao mês passado
                 </>
