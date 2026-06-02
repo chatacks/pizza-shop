@@ -1,6 +1,6 @@
 import { api } from '@/lib/axios';
 
-interface GetProfileReponse {
+export interface GetProfileReponse {
   name: string;
   id: string;
   email: string;
