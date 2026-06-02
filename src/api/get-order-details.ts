@@ -8,8 +8,7 @@ interface OrderItems {
     name: string;
   };
 }
-
-interface GetOrderDetailsResponse {
+export interface GetOrderDetailsResponse {
   id: string;
   createdAt: string;
   status: 'pending' | 'processing' | 'delivered' | 'canceled';
