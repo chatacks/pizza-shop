@@ -1,7 +1,8 @@
 import * as zod from 'zod';
 
 const envSchema = zod.object({
-  VITE_API_URL: zod.url(),
+  MODE: zod.enum(['production', 'development', 'test']),
+  VITE_API_URL: zod.string(),
   VITE_ENABLE_API_DELAY: zod.string().transform((value) => value === 'true'),
 });
 
