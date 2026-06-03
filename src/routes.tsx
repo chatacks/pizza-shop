@@ -30,11 +30,11 @@ export const router = createBrowserRouter([
     Component: AuthLayout,
     children: [
       {
-        path: 'sign-in',
+        path: '/sign-in',
         Component: SignIn,
       },
       {
-        path: 'sign-up',
+        path: '/sign-up',
         Component: SignUp,
       },
     ],
