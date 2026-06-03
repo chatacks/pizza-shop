@@ -18,7 +18,7 @@ const signUpFormSchema = zod.object({
   email: zod.email(),
 });
 
-type signUpFormData = zod.infer<typeof signUpFormSchema>;
+type SignUpFormData = zod.infer<typeof signUpFormSchema>;
 
 export function SignUp() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export function SignUp() {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<signUpFormData>({
+  } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
       email: '',
@@ -38,9 +38,9 @@ export function SignUp() {
     mutationFn: registerRestaurant,
   });
 
-  const handleSignUp = async (data: signUpFormData) => {
+  const handleSignUp = async (data: SignUpFormData) => {
     try {
-      registerFn(data);
+      await registerFn(data);
       toast.success('Restaurante cadastrado com sucesso!', {
         action: {
           label: 'Login',
