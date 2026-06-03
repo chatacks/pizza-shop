@@ -65,3 +65,26 @@ test('filter by customer name', async ({ page }) => {
 
   expect(page.getByRole('cell', { name: /Customer 51/i })).toBeVisible();
 });
+
+test('filter by status', async ({ page }) => {
+  await page.goto('/orders', { waitUntil: 'networkidle' });
+
+  const combobox = page.getByRole('combobox');
+  await combobox.click();
+
+  await page.waitForTimeout(1000);
+
+  const pendentLabel = page.getByLabel('Pendente');
+  await pendentLabel.click();
+
+  const filterButton = page.getByRole('button', {
+    name: /Filtrar resultados/i,
+  });
+  await filterButton.click();
+
+  await page.waitForTimeout(1000);
+
+  const tableRows = await page.getByRole('cell', { name: /Pendente/i }).all();
+
+  expect(tableRows).toHaveLength(10);
+});
